@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export type Category = {
   id: string;
@@ -6,56 +6,17 @@ export type Category = {
   color: string;
 };
 
-interface CategoryState {
-  categories: Category[];
-  status: "idle" | "loading" | "failed";
-  error?: string;
-}
-
-const initialState: CategoryState = {
-  categories: [],
-  status: "idle",
-  error: undefined,
-};
-
-export const fetchCategories = createAsyncThunk<
-  Category[],
-  void,
-  { rejectValue: string }
->("categories/fetchCategories", async (_, { rejectWithValue }) => {
-  try {
-    const response = await fetch("http://localhost:3001/categories");
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return rejectWithValue("Failed to fetch categories from db.json");
-  }
+export const categoryApi = createApi({
+  reducerPath: "categoryApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+  tagTypes: ["Categories"],
+  endpoints: (builder) => ({
+    getCategories: builder.query<Category[], void>({
+      query: () => "/categories",
+      providesTags: ["Categories"],
+    }),
+  }),
 });
 
-const categorySlice = createSlice({
-  name: "categories",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCategories.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(
-        fetchCategories.fulfilled,
-        (state, action: PayloadAction<Category[]>) => {
-          if (state.status === "loading") {
-            state.status = "idle";
-            state.categories = action.payload;
-          }
-        },
-      )
-      .addCase(fetchCategories.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      });
-  },
-});
-
-export default categorySlice.reducer;
+export const { useGetCategoriesQuery } = categoryApi;
+export default categoryApi;

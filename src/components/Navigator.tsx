@@ -1,46 +1,42 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodoAsync } from "../store/todoSlice";
+import { useAddTodoMutation } from "../store/todoSlice";
 import AddButton from "./AddButton";
-import Categorie from "./Categorie";
+import Categorie from "./Categorie"; // ✅ Used for selecting category when adding a todo
+import CategorieFilter from "./CategorieFilter"; // ✅ Used for filtering displayed tasks
 import InputCreate from "./InputCreate";
-import { toast } from "sonner";
-import { AppDispatch } from "../store/store";
-import CategorieFilter from "./CategorieFilter";
 import StatusFilter from "./StatusFilter";
+import { toast } from "sonner";
 
 export const Navigator = () => {
   const [todoText, setTodoText] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const dispatch = useDispatch<AppDispatch>();
+  const [selectedCategory, setSelectedCategory] = useState<string>(""); // ✅ For adding todos
+  const [filterCategory, setFilterCategory] = useState<string>("all"); // ✅ For filtering
+  const [addTodo, { isLoading }] = useAddTodoMutation();
 
-  const handleAddTodo = (event?: React.FormEvent) => {
-    if (event) event.preventDefault();
+  const handleAddTodo = async (event?: React.FormEvent) => {
+    event?.preventDefault();
 
     if (!todoText.trim() || !selectedCategory) {
-      toast.error("Please enter a todo and select a category!");
+      toast.error("Please enter a todo and select a valid category!");
       return;
     }
 
     const newTodo = {
-      id: Date.now().toString(),
       text: todoText,
-      description: "", // ✅ Ensures description is always empty when adding
+      description: "",
       completed: false,
-      category: selectedCategory,
+      category: selectedCategory, // ✅ Saved in DB
     };
 
-    dispatch(addTodoAsync(newTodo))
-      .unwrap()
-      .then(() => {
-        toast.success("Todo added successfully!");
-        setTodoText("");
-        setSelectedCategory("");
-      })
-      .catch((error) => {
-        console.error("Error saving todo:", error);
-        toast.error("Failed to add todo. Try again!");
-      });
+    try {
+      await addTodo(newTodo).unwrap();
+      toast.success("Todo added successfully!");
+      setTodoText("");
+      setSelectedCategory("");
+    } catch (error) {
+      console.error("Error saving todo:", error);
+      toast.error("Failed to add todo. Try again!");
+    }
   };
 
   return (
@@ -54,10 +50,13 @@ export const Navigator = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <AddButton onClick={(event) => handleAddTodo(event)} />
+        <AddButton onClick={handleAddTodo} disabled={isLoading} />
       </form>
       <div className="flex gap-2 pt-2">
-        <CategorieFilter />
+        <CategorieFilter
+          selectedCategory={filterCategory}
+          setSelectedCategory={setFilterCategory}
+        />
         <StatusFilter />
       </div>
     </div>

@@ -1,76 +1,76 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
 import {
-  deleteTodoAsync,
-  toggleTodoAsync,
-  fetchTodos,
-  updateTodoAsync,
+  useGetTodosQuery,
+  useDeleteTodoMutation,
+  useToggleTodoMutation,
+  useUpdateTodoMutation,
 } from "../store/todoSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import TaskItem from "./TaskItem";
-import { useEffect, useMemo } from "react";
+import Pagination from "./Pagination";
+import { useState, useEffect } from "react";
 
 const TaskList = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { todos, status } = useSelector((state: RootState) => state.todos);
+  const { data: todos = [], isLoading, isError } = useGetTodosQuery();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [toggleTodo] = useToggleTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+
   const selectedCategory = useSelector(
     (state: RootState) => state.filters.category,
   );
-  const selectedStatus = useSelector(
-    (state: RootState) => state.filters.status,
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const filteredTodos = todos.filter(
+    (todo) => selectedCategory === "all" || todo.category === selectedCategory,
+  );
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredTodos.length / itemsPerPage),
   );
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchTodos());
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
     }
-  }, [dispatch, status]);
+  }, [filteredTodos.length, itemsPerPage, totalPages]);
 
-  const filteredTodos = useMemo(() => {
-    return todos.filter((todo) => {
-      const categoryMatch = selectedCategory
-        ? todo.category === selectedCategory
-        : true;
-      const statusMatch =
-        selectedStatus === "completed"
-          ? todo.completed
-          : selectedStatus === "pending"
-            ? !todo.completed
-            : true;
+  const paginatedTodos = filteredTodos.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
-      return categoryMatch && statusMatch;
-    });
-  }, [todos, selectedCategory, selectedStatus]);
-
-  const handleDelete = (id: string) => {
-    dispatch(deleteTodoAsync(id));
-  };
-
-  const handleToggle = (id: string) => {
-    dispatch(toggleTodoAsync(id));
-  };
-
-  const handleEdit = (id: string, newText: string) => {
-    dispatch(updateTodoAsync({ id, text: newText }));
-  };
-
-  if (status === "loading") return <p>Loading tasks...</p>;
-  if (status === "failed") return <p>Error fetching tasks.</p>;
+  if (isLoading) return <p>Loading tasks...</p>;
+  if (isError) return <p className="text-red-500">Error fetching tasks.</p>;
 
   return (
     <div className="flex flex-col gap-3">
-      {filteredTodos.length > 0 ? (
-        filteredTodos.map((todo) => (
+      {paginatedTodos.length > 0 ? (
+        paginatedTodos.map((todo) => (
           <TaskItem
             key={todo.id}
             todo={todo}
-            onDelete={handleDelete}
-            onToggle={handleToggle}
-            onEdit={handleEdit}
+            onDelete={() => deleteTodo(todo.id)}
+            onToggle={() =>
+              toggleTodo({ id: todo.id, completed: !todo.completed })
+            }
+            onEdit={(id, text) => updateTodo({ id, text })}
           />
         ))
       ) : (
-        <p>No tasks found for the selected filters!</p>
+        <p>No tasks found for the selected category!</p>
       )}
+      <Pagination
+        totalItems={filteredTodos.length}
+        itemsPerPageOptions={[5, 10, 15, 20, 25]}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={setItemsPerPage}
+      />
     </div>
   );
 };

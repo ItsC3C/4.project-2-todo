@@ -1,7 +1,8 @@
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
-import { fetchCategories, Category } from "@/store/categorySlice";
+"use client";
+
+import React from "react";
+import { useGetCategoriesQuery } from "@/store/categorySlice";
+import { useDispatch } from "react-redux";
 import { setCategoryFilter } from "@/store/filterSlice";
 import {
   Select,
@@ -10,59 +11,51 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { Badge } from "./ui/badge";
 
-const CategorieFilter: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { categories, status, error } = useSelector(
-    (state: RootState) => state.categories,
-  );
-  const selectedCategory = useSelector(
-    (state: RootState) => state.filters.category,
-  );
+type CategorieFilterProps = {
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+};
 
-  // ✅ Fetch categories only when necessary
-  React.useEffect(() => {
-    if (status === "idle" && categories.length === 0) {
-      dispatch(fetchCategories());
-    }
-  }, [dispatch, status, categories.length]);
+const CategorieFilter: React.FC<CategorieFilterProps> = ({
+  selectedCategory,
+  setSelectedCategory,
+}) => {
+  const dispatch = useDispatch();
+  const { data: categories = [], isLoading, error } = useGetCategoriesQuery();
 
-  // ✅ Handle category selection
+  if (isLoading) return <p>Loading categories...</p>;
+  if (error) return <p className="text-red-500">Error loading categories</p>;
+
   const handleCategoryChange = (category: string) => {
-    dispatch(setCategoryFilter(category === "all" ? null : category));
+    setSelectedCategory(category);
+    dispatch(setCategoryFilter(category));
+  };
+
+  const getCategoryColor = (category: string) => {
+    return categories.find((cat) => cat.name === category)?.color || "#6b7280";
   };
 
   return (
-    <Select
-      onValueChange={handleCategoryChange}
-      value={selectedCategory || "all"}
-      name="category"
-    >
-      <SelectTrigger className="w-[200px]" id="category-filter">
+    <Select onValueChange={handleCategoryChange} value={selectedCategory}>
+      <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Filter by category..." />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all">All Categories</SelectItem>
-        {status === "loading" ? (
-          <SelectItem disabled value="loading">
-            Loading...
-          </SelectItem>
-        ) : error ? (
-          <SelectItem disabled value="error">
-            Error loading categories
-          </SelectItem>
-        ) : categories.length === 0 ? (
+        <SelectItem value="all">
+          <Badge style={{ backgroundColor: "#6b7280" }}>All Categories</Badge>
+        </SelectItem>
+        {categories.length === 0 ? (
           <SelectItem disabled value="empty">
             No categories found
           </SelectItem>
         ) : (
-          categories.map((category: Category) => (
-            <SelectItem key={category.id} value={category.name}>
-              <span
-                className="mr-2 inline-block h-3 w-3 rounded-full"
-                style={{ backgroundColor: category.color }}
-              ></span>
-              {category.name}
+          categories.map(({ id, name }) => (
+            <SelectItem key={id} value={name}>
+              <Badge style={{ backgroundColor: getCategoryColor(name) }}>
+                {name}
+              </Badge>
             </SelectItem>
           ))
         )}

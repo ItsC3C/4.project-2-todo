@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useGetTodosQuery } from "../store/todoSlice"; // ✅ Import RTK Query hook
 
 const Footer = () => {
-  const todos = useSelector((state: RootState) => state.todos.todos);
+  const { data: todos = [] } = useGetTodosQuery(); // ✅ Fetch todos from API
 
   const total = todos.length;
   const active = todos.filter((todo) => !todo.completed).length;

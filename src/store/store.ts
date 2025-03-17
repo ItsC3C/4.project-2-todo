@@ -1,15 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import categoryReducer from "./categorySlice";
-import todoReducer from "./todoSlice";
-import filterReducer from "./filterSlice";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import todoApi from "./todoSlice";
+import { categoryApi } from "./categorySlice";
+import filterSlice from "./filterSlice";
 
 export const store = configureStore({
   reducer: {
-    categories: categoryReducer,
-    todos: todoReducer,
-    filters: filterReducer,
+    [todoApi.reducerPath]: todoApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer, // ✅ Add categoryApi reducer
+    filters: filterSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(todoApi.middleware, categoryApi.middleware), // ✅ Include categoryApi middleware
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export default store;

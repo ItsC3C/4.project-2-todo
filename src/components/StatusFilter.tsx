@@ -19,7 +19,7 @@ const StatusFilter: React.FC = () => {
   );
 
   const handleStatusChange = (status: string) => {
-    dispatch(setStatusFilter(status === "all" ? null : status)); // null for no status filter
+    dispatch(setStatusFilter(status));
   };
 
   return (

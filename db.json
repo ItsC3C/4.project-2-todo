@@ -1,37 +1,11 @@
 {
   "todos": [
     {
-      "text": "Build a todo app that works",
-      "id": "2",
-      "completed": false
-    },
-    {
       "id": "3",
-      "text": "Go for a run tonight",
+      "text": "Go for a run tonight at 10",
       "description": "Run 5 kilometers in the park to stay active and healthy.",
-      "completed": false,
+      "completed": true,
       "category": "Personal"
-    },
-    {
-      "id": "4",
-      "text": "Read a book",
-      "description": "Read at least 30 pages of a fiction or self-development book.",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "5",
-      "text": "Buy groceries",
-      "description": "Purchase milk, eggs, vegetables, and other essentials for the week.",
-      "completed": false,
-      "category": "Shopping"
-    },
-    {
-      "id": "6",
-      "text": "Prepare presentation for client meeting",
-      "description": "Create slides and outline key discussion points for the upcoming client meeting.",
-      "completed": false,
-      "category": "Work"
     },
     {
       "id": "7",
@@ -44,7 +18,7 @@
       "id": "8",
       "text": "Update documentation",
       "description": "Ensure all project documentation is up-to-date and properly formatted.",
-      "completed": false,
+      "completed": true,
       "category": "Work"
     },
     {
@@ -58,7 +32,7 @@
       "id": "10",
       "text": "Attend team standup",
       "description": "Join the daily team standup meeting to discuss progress and blockers.",
-      "completed": false,
+      "completed": true,
       "category": "Work"
     },
     {
@@ -97,7 +71,35 @@
       "category": "Learning"
     },
     {
-      "id": "1742221551308",
+      "id": "1742224013332",
+      "text": "hallo zeggen",
+      "description": "",
+      "completed": false,
+      "category": "Personal"
+    },
+    {
+      "id": "1742224320217",
+      "text": "test",
+      "description": "",
+      "completed": false,
+      "category": "Personal"
+    },
+    {
+      "id": "1742224333750",
+      "text": "test",
+      "description": "",
+      "completed": false,
+      "category": "Shopping"
+    },
+    {
+      "id": "1742224512354",
+      "text": "eddddd",
+      "description": "",
+      "completed": false,
+      "category": "Personal"
+    },
+    {
+      "id": "7c05",
       "text": "test",
       "description": "",
       "completed": false,

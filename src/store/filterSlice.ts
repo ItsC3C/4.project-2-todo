@@ -1,27 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FilterState {
-  category: string | null;
-  status: string | null;
+  category: string;
+  status: string; // ✅ Added status filter
 }
 
 const initialState: FilterState = {
-  category: null,
-  status: null,
+  category: "all",
+  status: "all", // ✅ Default status filter
 };
 
 const filterSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setCategoryFilter: (state, action: PayloadAction<string | null>) => {
+    setCategoryFilter: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
-    setStatusFilter: (state, action: PayloadAction<string | null>) => {
+    setStatusFilter: (state, action: PayloadAction<string>) => {
+      // ✅ Ensure this exists
       state.status = action.payload;
     },
   },
 });
 
-export const { setCategoryFilter, setStatusFilter } = filterSlice.actions;
+export const { setCategoryFilter, setStatusFilter } = filterSlice.actions; // ✅ Export setStatusFilter
 export default filterSlice.reducer;
