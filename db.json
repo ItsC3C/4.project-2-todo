@@ -1,15 +1,13 @@
 {
   "todos": [
     {
+      "text": "Build a todo app that works",
       "id": "2",
-      "text": "Build a todo app",
-      "description": "Create a simple todo app using React, TypeScript, and Tailwind CSS.",
-      "completed": false,
-      "category": "Work"
+      "completed": false
     },
     {
       "id": "3",
-      "text": "Go for a run",
+      "text": "Go for a run tonight",
       "description": "Run 5 kilometers in the park to stay active and healthy.",
       "completed": false,
       "category": "Personal"
@@ -64,13 +62,6 @@
       "category": "Work"
     },
     {
-      "id": "18",
-      "text": "Call mom",
-      "description": "Have a 15-minute catch-up call with mom to check in on her.",
-      "completed": true,
-      "category": "Personal"
-    },
-    {
       "id": "19",
       "text": "Schedule dentist appointment",
       "description": "Call the dentist's office and book an appointment for next week.",
@@ -106,8 +97,8 @@
       "category": "Learning"
     },
     {
-      "id": "1742220522022",
-      "text": "kaka",
+      "id": "1742221551308",
+      "text": "test",
       "description": "",
       "completed": false,
       "category": "Personal"

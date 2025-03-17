@@ -4,9 +4,10 @@ import {
   deleteTodoAsync,
   toggleTodoAsync,
   fetchTodos,
+  updateTodoAsync,
 } from "../store/todoSlice";
 import TaskItem from "./TaskItem";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 const TaskList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,26 +20,26 @@ const TaskList = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchTodos());
+    }
+  }, [dispatch, status]);
 
-  // ✅ Filter todos by category
-  const filteredByCategory = selectedCategory
-    ? todos.filter((todo) => todo.category === selectedCategory)
-    : todos;
+  const filteredTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      const categoryMatch = selectedCategory
+        ? todo.category === selectedCategory
+        : true;
+      const statusMatch =
+        selectedStatus === "completed"
+          ? todo.completed
+          : selectedStatus === "pending"
+            ? !todo.completed
+            : true;
 
-  // ✅ Filter todos by status
-  const filteredTodos = selectedStatus
-    ? filteredByCategory.filter((todo) => {
-        if (selectedStatus === "completed") {
-          return todo.completed;
-        }
-        if (selectedStatus === "pending") {
-          return !todo.completed;
-        }
-        return true; // If "all", no filtering
-      })
-    : filteredByCategory;
+      return categoryMatch && statusMatch;
+    });
+  }, [todos, selectedCategory, selectedStatus]);
 
   const handleDelete = (id: string) => {
     dispatch(deleteTodoAsync(id));
@@ -46,6 +47,10 @@ const TaskList = () => {
 
   const handleToggle = (id: string) => {
     dispatch(toggleTodoAsync(id));
+  };
+
+  const handleEdit = (id: string, newText: string) => {
+    dispatch(updateTodoAsync({ id, text: newText }));
   };
 
   if (status === "loading") return <p>Loading tasks...</p>;
@@ -60,6 +65,7 @@ const TaskList = () => {
             todo={todo}
             onDelete={handleDelete}
             onToggle={handleToggle}
+            onEdit={handleEdit}
           />
         ))
       ) : (

@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FilterState {
   category: string | null;
-  status: string | null; // Added status filter
+  status: string | null;
 }
 
 const initialState: FilterState = {
-  category: null, // Default: No category filter applied
-  status: null, // Default: No status filter applied
+  category: null,
+  status: null,
 };
 
 const filterSlice = createSlice({
@@ -18,7 +18,7 @@ const filterSlice = createSlice({
       state.category = action.payload;
     },
     setStatusFilter: (state, action: PayloadAction<string | null>) => {
-      state.status = action.payload; // Update status filter
+      state.status = action.payload;
     },
   },
 });

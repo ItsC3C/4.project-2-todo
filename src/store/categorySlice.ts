@@ -18,7 +18,6 @@ const initialState: CategoryState = {
   error: undefined,
 };
 
-// ✅ Fetch categories and log the response once
 export const fetchCategories = createAsyncThunk<
   Category[],
   void,
@@ -28,7 +27,6 @@ export const fetchCategories = createAsyncThunk<
     const response = await fetch("http://localhost:3001/categories");
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
     const data = await response.json();
-    console.log("✅ API Response:", data); // ✅ Only logs once
     return data;
   } catch (error) {
     return rejectWithValue("Failed to fetch categories from db.json");
@@ -48,10 +46,8 @@ const categorySlice = createSlice({
         fetchCategories.fulfilled,
         (state, action: PayloadAction<Category[]>) => {
           if (state.status === "loading") {
-            // ✅ Prevents re-fetching
             state.status = "idle";
             state.categories = action.payload;
-            console.log("✅ Updated Redux State:", state.categories);
           }
         },
       )
