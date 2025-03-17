@@ -14,16 +14,31 @@ const TaskList = () => {
   const selectedCategory = useSelector(
     (state: RootState) => state.filters.category,
   );
+  const selectedStatus = useSelector(
+    (state: RootState) => state.filters.status,
+  );
 
-  // ✅ Fetch tasks on initial load
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
 
-  // ✅ Filter todos based on the selected category
-  const filteredTodos = selectedCategory
+  // ✅ Filter todos by category
+  const filteredByCategory = selectedCategory
     ? todos.filter((todo) => todo.category === selectedCategory)
     : todos;
+
+  // ✅ Filter todos by status
+  const filteredTodos = selectedStatus
+    ? filteredByCategory.filter((todo) => {
+        if (selectedStatus === "completed") {
+          return todo.completed;
+        }
+        if (selectedStatus === "pending") {
+          return !todo.completed;
+        }
+        return true; // If "all", no filtering
+      })
+    : filteredByCategory;
 
   const handleDelete = (id: string) => {
     dispatch(deleteTodoAsync(id));
@@ -48,7 +63,7 @@ const TaskList = () => {
           />
         ))
       ) : (
-        <p>No tasks found for the selected category!</p>
+        <p>No tasks found for the selected filters!</p>
       )}
     </div>
   );
