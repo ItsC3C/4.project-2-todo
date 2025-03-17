@@ -1,9 +1,8 @@
-"use client";
-
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { fetchCategories, Category } from "@/store/categorySlice";
+import { setCategoryFilter } from "@/store/filterSlice";
 import {
   Select,
   SelectTrigger,
@@ -11,48 +10,39 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { toast } from "sonner";
 
-type CategorieProps = {
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-};
-
-const Categorie: React.FC<CategorieProps> = ({
-  selectedCategory,
-  setSelectedCategory,
-}) => {
+const CategorieFilter: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { categories, status, error } = useSelector(
     (state: RootState) => state.categories,
+  );
+  const selectedCategory = useSelector(
+    (state: RootState) => state.filters.category,
   );
 
   // ✅ Fetch categories only when necessary
   React.useEffect(() => {
     if (status === "idle" && categories.length === 0) {
-      console.log("📌 Dispatching fetchCategories...");
       dispatch(fetchCategories());
     }
-  }, [dispatch, status, categories.length]); // ✅ No infinite loop
+  }, [dispatch, status, categories.length]);
 
-  // ✅ Log Redux state only when it changes
-  React.useEffect(() => {
-    console.log("📌 Redux State Updated:", { status, categories, error });
-    if (error) {
-      toast.error(error);
-    }
-  }, [status, categories, error]);
+  // ✅ Handle category selection
+  const handleCategoryChange = (category: string) => {
+    dispatch(setCategoryFilter(category === "all" ? null : category));
+  };
 
   return (
     <Select
-      onValueChange={setSelectedCategory}
-      value={selectedCategory}
+      onValueChange={handleCategoryChange}
+      value={selectedCategory || "all"}
       name="category"
     >
-      <SelectTrigger className="w-[200px]" id="category-select">
-        <SelectValue placeholder="Select category..." />
+      <SelectTrigger className="w-[200px]" id="category-filter">
+        <SelectValue placeholder="Filter by category..." />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem value="all">All Categories</SelectItem>
         {status === "loading" ? (
           <SelectItem disabled value="loading">
             Loading...
@@ -81,4 +71,4 @@ const Categorie: React.FC<CategorieProps> = ({
   );
 };
 
-export default Categorie;
+export default CategorieFilter;

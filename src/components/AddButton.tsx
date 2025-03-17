@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 
 type AddButtonProps = {
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const AddButton: React.FC<AddButtonProps> = ({ onClick }) => {

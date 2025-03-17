@@ -1,196 +1,116 @@
 {
   "todos": [
     {
-      "id": "1",
-      "text": "Learn React",
-      "completed": true,
-      "category": "Work"
-    },
-    {
       "id": "2",
       "text": "Build a todo app",
+      "description": "Create a simple todo app using React, TypeScript, and Tailwind CSS.",
       "completed": false,
       "category": "Work"
     },
     {
       "id": "3",
       "text": "Go for a run",
+      "description": "Run 5 kilometers in the park to stay active and healthy.",
       "completed": false,
       "category": "Personal"
     },
     {
       "id": "4",
       "text": "Read a book",
+      "description": "Read at least 30 pages of a fiction or self-development book.",
       "completed": false,
       "category": "Personal"
     },
     {
       "id": "5",
       "text": "Buy groceries",
+      "description": "Purchase milk, eggs, vegetables, and other essentials for the week.",
       "completed": false,
       "category": "Shopping"
     },
     {
       "id": "6",
       "text": "Prepare presentation for client meeting",
+      "description": "Create slides and outline key discussion points for the upcoming client meeting.",
       "completed": false,
       "category": "Work"
     },
     {
       "id": "7",
       "text": "Review project timeline",
+      "description": "Analyze the current project progress and update the timeline as needed.",
       "completed": true,
       "category": "Work"
     },
     {
       "id": "8",
       "text": "Update documentation",
+      "description": "Ensure all project documentation is up-to-date and properly formatted.",
       "completed": false,
       "category": "Work"
     },
     {
       "id": "9",
       "text": "Fix bug in login component",
+      "description": "Investigate and resolve the issue causing incorrect authentication flow.",
       "completed": true,
       "category": "Work"
     },
     {
       "id": "10",
       "text": "Attend team standup",
+      "description": "Join the daily team standup meeting to discuss progress and blockers.",
       "completed": false,
       "category": "Work"
     },
     {
       "id": "18",
       "text": "Call mom",
+      "description": "Have a 15-minute catch-up call with mom to check in on her.",
       "completed": true,
       "category": "Personal"
     },
     {
       "id": "19",
       "text": "Schedule dentist appointment",
+      "description": "Call the dentist's office and book an appointment for next week.",
       "completed": false,
       "category": "Personal"
     },
     {
       "id": "39",
       "text": "30 minute workout",
+      "description": "Complete a mix of cardio and strength training exercises for 30 minutes.",
       "completed": false,
       "category": "Health"
     },
     {
       "id": "40",
       "text": "Drink 8 glasses of water",
+      "description": "Stay hydrated by drinking at least 8 glasses of water throughout the day.",
       "completed": true,
       "category": "Health"
     },
     {
       "id": "47",
       "text": "Complete online course module",
+      "description": "Finish the next module in the online programming course.",
       "completed": false,
       "category": "Learning"
     },
     {
       "id": "48",
       "text": "Read chapter of technical book",
+      "description": "Read one chapter from a book on software architecture.",
       "completed": true,
       "category": "Learning"
     },
     {
-      "id": "1742215187426",
-      "text": "aaaa",
-      "completed": false,
-      "category": "Work"
-    },
-    {
-      "id": "1742215206325",
-      "text": "bbbb",
+      "id": "1742220522022",
+      "text": "kaka",
+      "description": "",
       "completed": false,
       "category": "Personal"
-    },
-    {
-      "id": "1742215266926",
-      "text": "ccccc",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742215372944",
-      "text": "vvvv",
-      "completed": false,
-      "category": "Work"
-    },
-    {
-      "id": "1742215423077",
-      "text": "ddddd",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742215573078",
-      "text": "sssss",
-      "completed": false,
-      "category": "Shopping"
-    },
-    {
-      "id": "1742215644539",
-      "text": "cccc",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742215816145",
-      "text": "aaaaa",
-      "completed": false,
-      "category": "Shopping"
-    },
-    {
-      "id": "1742215973898",
-      "text": "aaaaa",
-      "completed": false,
-      "category": "Health"
-    },
-    {
-      "id": "1742215992848",
-      "text": "aaaa",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742216004165",
-      "text": "aaaa",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742216018964",
-      "text": "aaaa",
-      "completed": false,
-      "category": "Health"
-    },
-    {
-      "id": "1742216143233",
-      "text": "test",
-      "completed": false,
-      "category": "Learning"
-    },
-    {
-      "id": "1742216213999",
-      "text": "testesteste",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742216244449",
-      "text": "ddddd",
-      "completed": false,
-      "category": "Health"
-    },
-    {
-      "id": "1742216257117",
-      "text": "ggggg",
-      "completed": false,
-      "category": "Shopping"
     }
   ],
   "categories": [

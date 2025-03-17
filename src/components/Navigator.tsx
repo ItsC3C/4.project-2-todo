@@ -6,6 +6,8 @@ import Categorie from "./Categorie";
 import InputCreate from "./InputCreate";
 import { toast } from "sonner";
 import { AppDispatch } from "../store/store";
+import CategorieFilter from "./CategorieFilter";
+import StatusFilter from "./StatusFilter";
 
 export const Navigator = () => {
   const [todoText, setTodoText] = useState<string>("");
@@ -23,6 +25,7 @@ export const Navigator = () => {
     const newTodo = {
       id: Date.now().toString(),
       text: todoText,
+      description: "", // ✅ Ensures description is always empty when adding
       completed: false,
       category: selectedCategory,
     };
@@ -41,17 +44,23 @@ export const Navigator = () => {
   };
 
   return (
-    <form
-      onSubmit={handleAddTodo}
-      className="flex w-full justify-between gap-2"
-    >
-      <InputCreate todoText={todoText} setTodoText={setTodoText} />
-      <Categorie
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
-      <AddButton onClick={handleAddTodo} />
-    </form>
+    <div>
+      <form
+        onSubmit={handleAddTodo}
+        className="flex w-full justify-between gap-2"
+      >
+        <InputCreate todoText={todoText} setTodoText={setTodoText} />
+        <Categorie
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+        <AddButton onClick={(event) => handleAddTodo(event)} />
+      </form>
+      <div className="flex gap-2 pt-2">
+        <CategorieFilter />
+        <StatusFilter />
+      </div>
+    </div>
   );
 };
 

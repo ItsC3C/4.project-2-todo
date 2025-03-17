@@ -18,7 +18,7 @@ const Header = () => {
   }, [isDarkMode]);
 
   return (
-    <header className="flex w-full items-center justify-between pb-2">
+    <header className="flex w-full items-center justify-between">
       <h1 className="text-2xl font-extrabold">Todo App</h1>
       <Toggle
         className="cursor-pointer border-2"
