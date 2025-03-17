@@ -1,9 +1,12 @@
 import Layout from "./Layout/Layout";
+import Navigator from "./components/Navigator";
 
 const App = () => {
   return (
     <Layout>
-      <div>App</div>
+      <div>
+        <Navigator />
+      </div>
     </Layout>
   );
 };

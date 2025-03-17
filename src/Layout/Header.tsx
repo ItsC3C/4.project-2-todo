@@ -21,7 +21,7 @@ const Header = () => {
     <header className="flex w-full items-center justify-between pb-2">
       <h1 className="text-2xl font-extrabold">Todo App</h1>
       <Toggle
-        className="cursor-pointer border-2 border-black bg-transparent dark:border-white"
+        className="cursor-pointer border-2"
         onClick={() => setIsDarkMode((prev) => !prev)}
       >
         {isDarkMode ? (
