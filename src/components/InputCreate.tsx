@@ -1,11 +1,14 @@
 import { Input } from "@/components/ui/input";
 
-type InputCreateProps = {
+interface InputCreateProps {
   todoText: string;
   setTodoText: (text: string) => void;
-};
+}
 
-const InputCreate: React.FC<InputCreateProps> = ({ todoText, setTodoText }) => {
+export default function InputCreate({
+  todoText,
+  setTodoText,
+}: InputCreateProps) {
   return (
     <div className="w-full">
       <Input
@@ -16,6 +19,4 @@ const InputCreate: React.FC<InputCreateProps> = ({ todoText, setTodoText }) => {
       />
     </div>
   );
-};
-
-export default InputCreate;
+}

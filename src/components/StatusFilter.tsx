@@ -1,8 +1,5 @@
-"use client";
-
-import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
+import { RootState } from "@/store/store";
 import { setStatusFilter } from "@/store/filterSlice";
 import {
   Select,
@@ -12,8 +9,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-const StatusFilter: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+export default function StatusFilter() {
+  const dispatch = useDispatch();
   const selectedStatus = useSelector(
     (state: RootState) => state.filters.status,
   );
@@ -28,7 +25,7 @@ const StatusFilter: React.FC = () => {
       value={selectedStatus || "all"}
       name="status"
     >
-      <SelectTrigger className="w-[200px]" id="status-filter">
+      <SelectTrigger id="status-filter">
         <SelectValue placeholder="Filter by Status" />
       </SelectTrigger>
       <SelectContent>
@@ -38,6 +35,4 @@ const StatusFilter: React.FC = () => {
       </SelectContent>
     </Select>
   );
-};
-
-export default StatusFilter;
+}

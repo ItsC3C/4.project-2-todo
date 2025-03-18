@@ -36,11 +36,11 @@ const todoApi = createApi({
       invalidatesTags: ["Todos"],
     }),
 
-    updateTodo: builder.mutation<Todo, Pick<Todo, "id" | "text">>({
-      query: ({ id, text }) => ({
+    updateTodo: builder.mutation<Todo, Partial<Todo> & { id: string }>({
+      query: ({ id, ...updates }) => ({
         url: `/todos/${id}`,
         method: "PATCH",
-        body: { text },
+        body: updates,
       }),
       invalidatesTags: ["Todos"],
     }),

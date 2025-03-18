@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import { useGetCategoriesQuery } from "@/store/categorySlice";
 import {
   Select,
@@ -9,28 +6,31 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { Badge } from "./ui/badge";
 
-type CategorieProps = {
+interface CategorieProps {
   selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-};
+  setSelectedCategory: (category: string) => void;
+}
 
-const Categorie: React.FC<CategorieProps> = ({
+export default function Categorie({
   selectedCategory,
   setSelectedCategory,
-}) => {
+}: CategorieProps) {
   const { data: categories = [], isLoading, error } = useGetCategoriesQuery();
 
   if (isLoading) return <p>Loading categories...</p>;
   if (error) return <p className="text-red-500">Error loading categories</p>;
 
+  const getCategoryColor = (category: string): string => {
+    const found = categories.find((cat) => cat.name === category);
+    return found ? found.color : "#6b7280";
+  };
+
   return (
-    <Select
-      onValueChange={(value) => setSelectedCategory(value)}
-      value={selectedCategory}
-    >
+    <Select onValueChange={setSelectedCategory} value={selectedCategory}>
       <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Select a category..." />
+        <SelectValue placeholder="Select category..." />
       </SelectTrigger>
       <SelectContent>
         {categories.length === 0 ? (
@@ -40,13 +40,13 @@ const Categorie: React.FC<CategorieProps> = ({
         ) : (
           categories.map(({ id, name }) => (
             <SelectItem key={id} value={name}>
-              {name}
+              <Badge style={{ backgroundColor: getCategoryColor(name) }}>
+                {name}
+              </Badge>
             </SelectItem>
           ))
         )}
       </SelectContent>
     </Select>
   );
-};
-
-export default Categorie;
+}

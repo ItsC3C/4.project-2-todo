@@ -7,11 +7,11 @@ import filterSlice from "./filterSlice";
 export const store = configureStore({
   reducer: {
     [todoApi.reducerPath]: todoApi.reducer,
-    [categoryApi.reducerPath]: categoryApi.reducer, // ✅ Add categoryApi reducer
+    [categoryApi.reducerPath]: categoryApi.reducer,
     filters: filterSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(todoApi.middleware, categoryApi.middleware), // ✅ Include categoryApi middleware
+    getDefaultMiddleware().concat(todoApi.middleware, categoryApi.middleware),
 });
 
 setupListeners(store.dispatch);

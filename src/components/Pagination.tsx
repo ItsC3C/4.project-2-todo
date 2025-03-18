@@ -17,17 +17,16 @@ interface PaginationProps {
   onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+export default function Pagination({
   totalItems,
   itemsPerPageOptions,
   currentPage,
   onPageChange,
   itemsPerPage,
   onItemsPerPageChange,
-}) => {
+}: PaginationProps) {
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
 
-  // Ensure currentPage doesn't exceed totalPages when items per page changes
   useEffect(() => {
     if (currentPage > totalPages) {
       onPageChange(totalPages);
@@ -35,10 +34,9 @@ const Pagination: React.FC<PaginationProps> = ({
   }, [totalPages, currentPage, onPageChange]);
 
   return (
-    <div className="flex items-center justify-between gap-4">
-      {/* Items per page dropdown */}
+    <div className="flex flex-col items-center justify-between gap-4 xl:flex-row">
       <div className="flex items-center gap-2">
-        <label htmlFor="items-per-page" className="text-sm font-medium">
+        <label htmlFor="items-per-page" className="text-xl font-medium">
           Items per page:
         </label>
         <Select
@@ -57,9 +55,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </SelectContent>
         </Select>
       </div>
-
-      {/* Pagination buttons */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-row items-center gap-2">
         <Button
           variant="outline"
           size="sm"
@@ -76,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
         >
           Previous
         </Button>
-        <p className="text-sm font-medium">
+        <p className="text-xl font-medium">
           Page {currentPage} of {totalPages}
         </p>
         <Button
@@ -98,6 +94,4 @@ const Pagination: React.FC<PaginationProps> = ({
       </div>
     </div>
   );
-};
-
-export default Pagination;
+}

@@ -1,7 +1,7 @@
-import { useGetTodosQuery } from "../store/todoSlice"; // ✅ Import RTK Query hook
+import { useGetTodosQuery } from "../store/todoSlice";
 
 const Footer = () => {
-  const { data: todos = [] } = useGetTodosQuery(); // ✅ Fetch todos from API
+  const { data: todos = [] } = useGetTodosQuery();
 
   const total = todos.length;
   const active = todos.filter((todo) => !todo.completed).length;

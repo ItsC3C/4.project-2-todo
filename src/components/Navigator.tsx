@@ -1,31 +1,29 @@
 import { useState } from "react";
 import { useAddTodoMutation } from "../store/todoSlice";
 import AddButton from "./AddButton";
-import Categorie from "./Categorie"; // ✅ Used for selecting category when adding a todo
-import CategorieFilter from "./CategorieFilter"; // ✅ Used for filtering displayed tasks
+import Categorie from "./Categorie";
+import CategorieFilter from "./CategorieFilter";
 import InputCreate from "./InputCreate";
 import StatusFilter from "./StatusFilter";
 import { toast } from "sonner";
 
 export const Navigator = () => {
-  const [todoText, setTodoText] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>(""); // ✅ For adding todos
-  const [filterCategory, setFilterCategory] = useState<string>("all"); // ✅ For filtering
+  const [todoText, setTodoText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filterCategory, setFilterCategory] = useState("all");
   const [addTodo, { isLoading }] = useAddTodoMutation();
 
-  const handleAddTodo = async (event?: React.FormEvent) => {
+  const handleAddTodo = async (event?: any) => {
     event?.preventDefault();
-
     if (!todoText.trim() || !selectedCategory) {
       toast.error("Please enter a todo and select a valid category!");
       return;
     }
-
     const newTodo = {
       text: todoText,
       description: "",
       completed: false,
-      category: selectedCategory, // ✅ Saved in DB
+      category: selectedCategory,
     };
 
     try {
@@ -40,10 +38,10 @@ export const Navigator = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <form
         onSubmit={handleAddTodo}
-        className="flex w-full justify-between gap-2"
+        className="flex w-full flex-col justify-between gap-2 xl:flex-row"
       >
         <InputCreate todoText={todoText} setTodoText={setTodoText} />
         <Categorie
@@ -52,7 +50,7 @@ export const Navigator = () => {
         />
         <AddButton onClick={handleAddTodo} disabled={isLoading} />
       </form>
-      <div className="flex gap-2 pt-2">
+      <div className="flex w-full flex-row gap-2 pt-2 pb-2">
         <CategorieFilter
           selectedCategory={filterCategory}
           setSelectedCategory={setFilterCategory}

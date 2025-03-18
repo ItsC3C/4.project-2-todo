@@ -16,43 +16,36 @@ interface TaskItemProps {
   todo: Todo;
   onDelete: (id: string) => void;
   onToggle: (id: string, completed: boolean) => void;
-  onEdit: (id: string, text: string) => void;
+  onEdit: (id: string, updates: Partial<Todo>) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({
+export default function TaskItem({
   todo,
   onDelete,
   onToggle,
   onEdit,
-}) => {
+}: TaskItemProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newText, setNewText] = useState(todo.text);
-
+  const [title, setTitle] = useState(todo.text);
+  const [description, setDescription] = useState(todo.description);
   const { data: categories = [] } = useGetCategoriesQuery();
 
-  const handleEditClick = (event: React.MouseEvent) => {
-    event.preventDefault();
-    if (!todo.completed) setIsEditing(true);
-  };
-
-  const handleSaveEdit = (event?: React.FormEvent) => {
-    event?.preventDefault();
-    if (newText.trim()) {
-      onEdit(todo.id, newText);
+  const saveTitle = () => {
+    if (title.trim()) {
+      onEdit(todo.id, { text: title });
       setIsEditing(false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleSaveEdit();
+  const saveDescription = () => {
+    onEdit(todo.id, { description });
   };
 
-  const getCategoryColor = (category: string) => {
-    return categories.find((cat) => cat.name === category)?.color || "#6b7280";
-  };
+  const categoryColor =
+    categories.find((cat) => cat.name === todo.category)?.color || "#6b7280";
 
   return (
-    <div className="flex items-center justify-between gap-5 rounded-lg border px-5 py-1 shadow-sm">
+    <div className="flex items-center justify-between gap-5 rounded-lg border px-5 py-1 shadow-xl">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value={`task-${todo.id}`}>
           <AccordionTrigger className="flex w-full items-center gap-x-3">
@@ -64,27 +57,31 @@ const TaskItem: React.FC<TaskItemProps> = ({
               {isEditing ? (
                 <Input
                   type="text"
-                  value={newText}
-                  onChange={(e) => setNewText(e.target.value)}
-                  onBlur={handleSaveEdit}
-                  onKeyDown={handleKeyDown}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  onBlur={saveTitle}
                   autoFocus
                 />
               ) : (
                 <span
-                  className={`text-sm font-medium ${todo.completed ? "text-gray-500 line-through" : ""}`}
+                  className={`text-xl font-medium ${
+                    todo.completed ? "text-gray-500 line-through" : ""
+                  }`}
                 >
                   {todo.text}
                 </span>
               )}
             </div>
-            <Badge style={{ backgroundColor: getCategoryColor(todo.category) }}>
+            <Badge style={{ backgroundColor: categoryColor }}>
               {todo.category}
             </Badge>
             {!todo.completed && (
               <Pencil
                 className="h-5 w-5 cursor-pointer text-blue-500 hover:text-blue-700"
-                onClick={handleEditClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsEditing(true);
+                }}
               />
             )}
             <X
@@ -92,18 +89,17 @@ const TaskItem: React.FC<TaskItemProps> = ({
               onClick={() => onDelete(todo.id)}
             />
           </AccordionTrigger>
-          <AccordionContent className="text-sm">
+          <AccordionContent className="text-xl">
             <Input
               type="text"
               placeholder="Describe your task..."
-              value={todo.description}
-              readOnly
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              onBlur={saveDescription}
             />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>
   );
-};
-
-export default TaskItem;
+}

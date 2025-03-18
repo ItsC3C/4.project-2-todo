@@ -1,109 +1,74 @@
 {
   "todos": [
     {
-      "id": "3",
-      "text": "Go for a run tonight at 10",
-      "description": "Run 5 kilometers in the park to stay active and healthy.",
-      "completed": true,
-      "category": "Personal"
-    },
-    {
-      "id": "7",
-      "text": "Review project timeline",
-      "description": "Analyze the current project progress and update the timeline as needed.",
-      "completed": true,
+      "id": "101",
+      "text": "Plan quarterly meeting",
+      "description": "Organize agenda and invite team for the quarterly planning meeting.",
+      "completed": false,
       "category": "Work"
     },
     {
-      "id": "8",
-      "text": "Update documentation",
-      "description": "Ensure all project documentation is up-to-date and properly formatted.",
-      "completed": true,
-      "category": "Work"
-    },
-    {
-      "id": "9",
-      "text": "Fix bug in login component",
-      "description": "Investigate and resolve the issue causing incorrect authentication flow.",
-      "completed": true,
-      "category": "Work"
-    },
-    {
-      "id": "10",
-      "text": "Attend team standup",
-      "description": "Join the daily team standup meeting to discuss progress and blockers.",
-      "completed": true,
-      "category": "Work"
-    },
-    {
-      "id": "19",
-      "text": "Schedule dentist appointment",
-      "description": "Call the dentist's office and book an appointment for next week.",
+      "id": "102",
+      "text": "Buy groceries",
+      "description": "Purchase vegetables, fruits, and dairy products for the week.",
       "completed": false,
       "category": "Personal"
     },
     {
-      "id": "39",
-      "text": "30 minute workout",
-      "description": "Complete a mix of cardio and strength training exercises for 30 minutes.",
-      "completed": false,
-      "category": "Health"
-    },
-    {
-      "id": "40",
-      "text": "Drink 8 glasses of water",
-      "description": "Stay hydrated by drinking at least 8 glasses of water throughout the day.",
+      "id": "103",
+      "text": "Order new laptop accessories",
+      "description": "Check for deals on a new mouse, keyboard, and laptop stand.",
       "completed": true,
-      "category": "Health"
-    },
-    {
-      "id": "47",
-      "text": "Complete online course module",
-      "description": "Finish the next module in the online programming course.",
-      "completed": false,
-      "category": "Learning"
-    },
-    {
-      "id": "48",
-      "text": "Read chapter of technical book",
-      "description": "Read one chapter from a book on software architecture.",
-      "completed": true,
-      "category": "Learning"
-    },
-    {
-      "id": "1742224013332",
-      "text": "hallo zeggen",
-      "description": "",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742224320217",
-      "text": "test",
-      "description": "",
-      "completed": false,
-      "category": "Personal"
-    },
-    {
-      "id": "1742224333750",
-      "text": "test",
-      "description": "",
-      "completed": false,
       "category": "Shopping"
     },
     {
-      "id": "1742224512354",
-      "text": "eddddd",
-      "description": "",
+      "id": "104",
+      "text": "Yoga session",
+      "description": "Attend an evening yoga class to unwind and relax.",
+      "completed": false,
+      "category": "Health"
+    },
+    {
+      "id": "105",
+      "text": "Finish coding challenge",
+      "description": "Complete the latest coding challenge on the programming platform.",
+      "completed": false,
+      "category": "Learning"
+    },
+    {
+      "id": "106",
+      "text": "Update team progress report",
+      "description": "Compile the team's achievements and challenges for the month.",
+      "completed": true,
+      "category": "Work"
+    },
+    {
+      "id": "107",
+      "text": "Call insurance company",
+      "description": "Inquire about policy updates and premium changes.",
       "completed": false,
       "category": "Personal"
     },
     {
-      "id": "7c05",
-      "text": "test",
-      "description": "",
+      "id": "108",
+      "text": "Research new smartphone deals",
+      "description": "Compare prices and reviews for the latest smartphone models.",
+      "completed": true,
+      "category": "Shopping"
+    },
+    {
+      "id": "109",
+      "text": "Go for a 5k run",
+      "description": "Complete a 5-kilometer run in the park for fitness.",
       "completed": false,
-      "category": "Personal"
+      "category": "Health"
+    },
+    {
+      "id": "110",
+      "text": "Attend webinar on TypeScript",
+      "description": "Join the online webinar to learn more about advanced TypeScript features.",
+      "completed": false,
+      "category": "Learning"
     }
   ],
   "categories": [

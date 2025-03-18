@@ -19,26 +19,42 @@ const TaskList = () => {
   const selectedCategory = useSelector(
     (state: RootState) => state.filters.category,
   );
+  const selectedStatus = useSelector(
+    (state: RootState) => state.filters.status,
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const filteredTodos = todos.filter(
-    (todo) => selectedCategory === "all" || todo.category === selectedCategory,
-  );
+  const generatePaginationOptions = (totalItems: number) => {
+    const options = [5];
+    for (let i = 10; i <= Math.min(50, totalItems); i += 5) {
+      options.push(i);
+    }
+    return options;
+  };
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredTodos.length / itemsPerPage),
-  );
+  const filteredTodos = todos.filter((todo) => {
+    const categoryMatch =
+      selectedCategory === "all" || todo.category === selectedCategory;
+    const statuxlatch =
+      selectedStatus === "all" ||
+      (selectedStatus === "completed" && todo.completed) ||
+      (selectedStatus === "pending" && !todo.completed);
+    return categoryMatch && statuxlatch;
+  });
+
+  const sortedTodos = [...filteredTodos].reverse();
+
+  const totalPages = Math.max(1, Math.ceil(sortedTodos.length / itemsPerPage));
 
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
-  }, [filteredTodos.length, itemsPerPage, totalPages]);
+  }, [sortedTodos.length, itemsPerPage, totalPages]);
 
-  const paginatedTodos = filteredTodos.slice(
+  const paginatedTodos = sortedTodos.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -57,15 +73,15 @@ const TaskList = () => {
             onToggle={() =>
               toggleTodo({ id: todo.id, completed: !todo.completed })
             }
-            onEdit={(id, text) => updateTodo({ id, text })}
+            onEdit={(id, updates) => updateTodo({ id, ...updates })}
           />
         ))
       ) : (
-        <p>No tasks found for the selected category!</p>
+        <p>No tasks found for the selected category and status!</p>
       )}
       <Pagination
-        totalItems={filteredTodos.length}
-        itemsPerPageOptions={[5, 10, 15, 20, 25]}
+        totalItems={sortedTodos.length}
+        itemsPerPageOptions={generatePaginationOptions(sortedTodos.length)}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
         itemsPerPage={itemsPerPage}

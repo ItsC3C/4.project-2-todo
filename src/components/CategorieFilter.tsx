@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import { useGetCategoriesQuery } from "@/store/categorySlice";
 import { useDispatch } from "react-redux";
 import { setCategoryFilter } from "@/store/filterSlice";
@@ -13,15 +10,15 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "./ui/badge";
 
-type CategorieFilterProps = {
+interface CategorieFilterProps {
   selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-};
+  setSelectedCategory: (category: string) => void;
+}
 
-const CategorieFilter: React.FC<CategorieFilterProps> = ({
+export default function CategorieFilter({
   selectedCategory,
   setSelectedCategory,
-}) => {
+}: CategorieFilterProps) {
   const dispatch = useDispatch();
   const { data: categories = [], isLoading, error } = useGetCategoriesQuery();
 
@@ -33,8 +30,9 @@ const CategorieFilter: React.FC<CategorieFilterProps> = ({
     dispatch(setCategoryFilter(category));
   };
 
-  const getCategoryColor = (category: string) => {
-    return categories.find((cat) => cat.name === category)?.color || "#6b7280";
+  const getCategoryColor = (category: string): string => {
+    const found = categories.find((cat) => cat.name === category);
+    return found ? found.color : "#6b7280";
   };
 
   return (
@@ -62,6 +60,4 @@ const CategorieFilter: React.FC<CategorieFilterProps> = ({
       </SelectContent>
     </Select>
   );
-};
-
-export default CategorieFilter;
+}
