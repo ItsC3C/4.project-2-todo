@@ -10,7 +10,9 @@ export type Todo = {
 
 const todoApi = createApi({
   reducerPath: "todoApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://dirt-handsome-muse.glitch.me",
+  }),
   tagTypes: ["Todos"],
   endpoints: (builder) => ({
     getTodos: builder.query<Todo[], void>({

@@ -36,7 +36,7 @@ export default function Pagination({
   return (
     <div className="flex flex-col items-center justify-between gap-4 xl:flex-row">
       <div className="flex items-center gap-2">
-        <label htmlFor="items-per-page" className="text-xl font-medium">
+        <label htmlFor="items-per-page" className="text-sm font-medium">
           Items per page:
         </label>
         <Select
@@ -72,7 +72,7 @@ export default function Pagination({
         >
           Previous
         </Button>
-        <p className="text-xl font-medium">
+        <p className="text-sm font-medium">
           Page {currentPage} of {totalPages}
         </p>
         <Button

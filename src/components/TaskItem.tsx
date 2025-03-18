@@ -45,7 +45,7 @@ export default function TaskItem({
     categories.find((cat) => cat.name === todo.category)?.color || "#6b7280";
 
   return (
-    <div className="flex items-center justify-between gap-5 rounded-lg border px-5 py-1 shadow-xl">
+    <div className="flex items-center justify-between gap-5 rounded-lg border px-5 py-1 shadow-sm">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value={`task-${todo.id}`}>
           <AccordionTrigger className="flex w-full items-center gap-x-3">
@@ -64,7 +64,7 @@ export default function TaskItem({
                 />
               ) : (
                 <span
-                  className={`text-xl font-medium ${
+                  className={`text-sm font-medium ${
                     todo.completed ? "text-gray-500 line-through" : ""
                   }`}
                 >
@@ -89,7 +89,7 @@ export default function TaskItem({
               onClick={() => onDelete(todo.id)}
             />
           </AccordionTrigger>
-          <AccordionContent className="text-xl">
+          <AccordionContent className="text-sm">
             <Input
               type="text"
               placeholder="Describe your task..."

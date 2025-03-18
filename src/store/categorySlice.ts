@@ -8,7 +8,9 @@ export type Category = {
 
 export const categoryApi = createApi({
   reducerPath: "categoryApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://dirt-handsome-muse.glitch.me",
+  }),
   tagTypes: ["Categories"],
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
