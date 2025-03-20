@@ -6,7 +6,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Badge } from "./ui/badge";
 
 interface CategorieProps {
   selectedCategory: string;
@@ -40,9 +39,7 @@ export default function Categorie({
         ) : (
           categories.map(({ id, name }) => (
             <SelectItem key={id} value={name}>
-              <Badge style={{ backgroundColor: getCategoryColor(name) }}>
-                {name}
-              </Badge>
+              <span style={{ color: getCategoryColor(name) }}>{name}</span>
             </SelectItem>
           ))
         )}

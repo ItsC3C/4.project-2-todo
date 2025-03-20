@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <header className="flex w-full items-center justify-between">
-      <h1 className="text-2sm font-extrabold">Todo App</h1>
+      <h1 className="text-3xl font-extrabold">Todo App</h1>
       <Toggle
         className="cursor-pointer border-2"
         onClick={() => setIsDarkMode((prev) => !prev)}

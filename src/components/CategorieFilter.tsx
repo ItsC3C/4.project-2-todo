@@ -8,7 +8,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Badge } from "./ui/badge";
 
 interface CategorieFilterProps {
   selectedCategory: string;
@@ -42,7 +41,7 @@ export default function CategorieFilter({
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">
-          <Badge style={{ backgroundColor: "#6b7280" }}>All Categories</Badge>
+          <span style={{ color: "#6b7280" }}>All Categories</span>
         </SelectItem>
         {categories.length === 0 ? (
           <SelectItem disabled value="empty">
@@ -51,9 +50,7 @@ export default function CategorieFilter({
         ) : (
           categories.map(({ id, name }) => (
             <SelectItem key={id} value={name}>
-              <Badge style={{ backgroundColor: getCategoryColor(name) }}>
-                {name}
-              </Badge>
+              <span style={{ color: getCategoryColor(name) }}>{name}</span>
             </SelectItem>
           ))
         )}
